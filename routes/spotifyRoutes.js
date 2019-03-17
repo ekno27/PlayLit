@@ -86,7 +86,8 @@ router.get("/getPlaylistsTracks/:playlistId", (req,res)=> {
     .catch(error=>{
         console.log('spotifyAPI.getplaylistTracks error:')
         console.log(error.data)
-        res.send(error.data)
+        res.status(400)
+        res.send('Invalid PlaylistId')
     })     
 })
 

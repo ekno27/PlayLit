@@ -17,8 +17,12 @@ class Search extends React.Component{
       .then(res=>{
         this.setState({playlistInfo:res.data});
       }).catch(failure =>{
+        if (failure.response.status===400) {
+          alert("Invalid Playlist ID. Please enter a valid Spotify Playlist ID ")
+        }else{
         alert("hmmm, something went wrong. Check dev tools for more info");
-        console.log(failure);
+
+        }
       });
     }
     else {

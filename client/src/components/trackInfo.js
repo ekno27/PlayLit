@@ -3,6 +3,7 @@ import React from "react";
 const TrackInfo = (props)=>{
   var valencePercentage = Math.ceil(props.trackInfo.valence * 100);
   var energyPercentage = Math.ceil(props.trackInfo.energy * 100);
+  var danceabilityPercentage = Math.ceil(props.trackInfo.danceability *100);
   
   var styleValence ={
     width: valencePercentage+"%",
@@ -12,8 +13,13 @@ const TrackInfo = (props)=>{
     width: energyPercentage+"%"
   }
 
+  var styleDanceability = {
+    width: danceabilityPercentage +"%"
+  }
+
   var valenceDisplay = `${valencePercentage}%`;
   var energyDisplay = `${energyPercentage}%`;
+  var danceabilityDisplay = `${danceabilityPercentage}%`;
 
   
   return(
@@ -44,6 +50,17 @@ const TrackInfo = (props)=>{
           </div>
           <div className="col s2">
             <span className="search__display-percentage search__display-energy" >{energyDisplay}</span>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s10">
+            <div className="progress  search__progress-bar-parent ">
+              <div className="search__progress-bar--dance determinate" style={styleDanceability}>
+              </div>
+            </div>
+          </div>
+          <div className="col s2">
+            <span className="search__display-percentage search__display-dance" >{danceabilityDisplay}</span>
           </div>
         </div>
           

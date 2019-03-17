@@ -55,7 +55,9 @@ body {
 .results__legend--valence {
   background-color: #2f98bf;
 }
-
+.results__legend--dance {
+  background-color: #be90d4
+}
 
 /*Styles for search.js*/
 .search {
@@ -101,6 +103,9 @@ body {
 .search__display-energy {
   color:#2f98bf;
 }
+.search__display-dance {
+  color: #be90d4;
+}
 
 .search__progress-bar--valence {
   height: 1.5rem;
@@ -111,6 +116,11 @@ body {
   height: 1.5rem;
   border-radius: 8px;
   background-color: #2f98bf !important;
+}
+.search__progress-bar--dance{
+  height: 1.5rem;
+  border-radius: 8px;
+  background-color: #be90d4 !important;
 }
 
 

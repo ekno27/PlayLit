@@ -12,6 +12,7 @@ const Results = (props) =>{
                     </h2>
                     <span className="results__legend-base results__legend--energy"></span>Valence
                     <span className="results__legend-base results__legend--valence"></span>Energy
+                    <span className="results__legend-base results__legend--dance"></span>Danceability
                 </div>
             </div>    
             <div className="row">{trackInfoList}</div>
