@@ -20,7 +20,7 @@ spotifyAPI.getAccessToken(client_id, client_secret)
 }).catch(error => {
     console.log('error on spotifyAPI.getAccessToken');
     console.log(error.data)
-    res.send(error.data)
+    
 })
 
 //route to test valid access token and successful retrieval of data from spotify's api
@@ -53,6 +53,7 @@ router.get("/getPlaylistsTracks/:playlistId", (req,res)=> {
         tracks.forEach(trackInfo => {
             tracksWithRelevantInfo.push({
                 trackName: trackInfo.track.name,
+                trackArtist: trackInfo.track.artists,
                 albumName: trackInfo.track.album.name,
                 albumArt: trackInfo.track.album.images[0],
                 trackId: trackInfo.track.id
