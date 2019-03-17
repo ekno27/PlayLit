@@ -1,81 +1,93 @@
 const router = require("express").Router();
 const spotifyAPI = require("./spotifyAPI");
-const request = require("request");
 const client_id = '9c9129423b7f41f4adf902179b0bdece'
 const client_secret = '8512f4cbf1e04573b0f980399e5dc541'
-const client_id64 = 'OWM5MTI5NDIzYjdmNDFmNGFkZjkwMjE3OWIwYmRlY2U='
-const client_secret64 = 'ODUxMmY0Y2JmMWUwNDU3M2IwZjk4MDM5OWU1ZGM1NDE='
-const access_token = ''
 
-//Make a call to spotify API so there is always a token available for use
-var authorizationOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: {
-        'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
-    },
-    form: {
-        grant_type: 'client_credentials'
-    },
-    json: true
-};
 
-request.post(authorizationOptions, (error, response, body) => {
-    if(!error && response.statusCode == 200) {
-    this.access_token = body.access_token
-    }
-    else {
-    console.log(error)
-    }
+//variables globally declared in order to use them in multiple api calls
+var playlistName = ''
+var tracksWithRelevantInfo = []
+var trackIdList = '' 
+var access_token = '' 
+
+//due to the lack of refresh_codes when using the client credentials flow,
+//I worked around it by instead getting an access token whenever the application's server-side loads, 
+//meaning there will always be a valid access_token without the need to check if it expired
+spotifyAPI.getAccessToken(client_id, client_secret)
+.then(response => {
+    console.log('ACCESS TOKEN RETRIEVED');
+    access_token = response.data.access_token
+}).catch(error => {
+    console.log('error on spotifyAPI.getAccessToken');
+    console.log(error.data)
+    res.send(error.data)
 })
 
-
-
-//TODO maybe use once its all good
-router.post("/getAccessToken", (req, res)=> {    
-
-}),
-
 //route to test valid access token and successful retrieval of data from spotify's api
+//not used in the application flow
 router.get('/getUserData', (req,res)=> {
-    var options = {
-        url: 'https://api.spotify.com/v1/users/kriskalam',
-        headers: {
-            'Authorization':'Bearer ' + this.access_token
-        },
-        json: true
-    }
-    
-    request.get(options, function(error, response, body) {
-        if(!error && response.statusCode == 200) {
-        console.log(body)
-        res.send(body)
-        }
-        else {
-        console.log('found error')
+    spotifyAPI.getUserData(access_token)
+    .then(response => {        
+        res.send(response.data);
+    })
+    .catch(error=>{
+        console.log('error on spotifyAPI.getUserData')
         res.send(error)
-        }
-    });
-
+    })
 }),
 
-router.get("/getPlaylistsTracks", (req,res)=> {
-    var options = {
-        url: 'https://api.spotify.com/v1/playlists/0lQqwqZ1IK6NmcWhOeDJBN',
-        headers: {
-            'Authorization':'Bearer ' + this.access_token 
-        },
-        json: true
-    }
-    request.get(options, (error, response, body) => {
-        if(!error && response.statusCode == 200) {
-            console.log(body.tracks.items)
-            res.send(body.tracks.items)
-            }
-            else {
-            console.log('found error')
-            res.send(error)
-            }
+//Spotify-web API no longer needs the combo of user_id and playlistID to retrieve playlist tracks data
+router.get("/getPlaylistsTracks/:playlistId", (req,res)=> {
+    //clean any data from previous calls
+    trackIdList = ''
+    playlistName = ''
+    tracksWithRelevantInfo = []
+
+    var playlistId = req.params.playlistId;
+    spotifyAPI.getPlaylistTracks(access_token, playlistId)
+    .then(response => {
+        var tracks = response.data.tracks.items;
+        playlistName = response.data.name
+        
+        // sanitize the api call to make the relevant information easily accessible
+        tracks.forEach(trackInfo => {
+            tracksWithRelevantInfo.push({
+                trackName: trackInfo.track.name,
+                albumName: trackInfo.track.album.name,
+                albumArt: trackInfo.track.album.images[0],
+                trackId: trackInfo.track.id
+            });
+
+            //append track ids to trackIdList so 
+            // the info of all tracks can be retrieved in one call 
+            trackIdList += `${trackInfo.track.id},`
+            });
+            spotifyAPI.getTrackInformation(access_token, trackIdList)
+            .then(response => {
+                var audioFeaturesList = response.data.audio_features
+                //add audio features to the on tracksWithRelevantInfo
+                audioFeaturesList.forEach((trackInfo, index) =>{
+                    tracksWithRelevantInfo[index].energy = trackInfo.energy;
+                    tracksWithRelevantInfo[index].valence =trackInfo.valence;
+                    tracksWithRelevantInfo[index].danceability = trackInfo.danceability
+                })
+                var playlistInfo ={
+                    tracks: tracksWithRelevantInfo,
+                    playlist_name: playlistName
+                }
+                res.send(playlistInfo);
+            })
+            .catch(error => {
+                console.log('error on spotifyAPI.getTrackInformation:')
+                console.log(error)
+                res.send(error)
+            })
     })
+    .catch(error=>{
+        console.log('spotifyAPI.getplaylistTracks error:')
+        console.log(error.data)
+        res.send(error.data)
+    })     
 })
 
 

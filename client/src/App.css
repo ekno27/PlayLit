@@ -1,20 +1,129 @@
+body {
+  background:#EBEBEB;
+}
+
 .App {
   text-align: center;
 }
-.header {
-  color: #ee6e73;
-  /* font-weight: 300; */
+
+/* STYLES for head.js */ 
+
+.head {
+  margin-bottom: 1rem;
+} 
+.head__title {
+  color: #FC7233;
+  font-weight: 350;
   text-align: center;
 }
 
-#send-btn{
-  margin-left: 21%;
-  padding-right: 29px;
-}
-
-#saved-articles-btn{
-  margin-left: 23%;
+.head__progress-bar {
+  margin: 0 auto;
+  width: 80%;
+  height: 2px;
 
 }
+.head__progress-bar--full {
+  width:100%;
+}
+
+/*styles for results.js*/
+.results {
+  background: white;
+  border-radius:5px;
+  padding: 5px 5px;
+}
+
+.results__title {
+  margin-left: 15px;
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.results__legend {
+  margin-left: 15px;
+  margin-bottom: 10px;
+  margin-top: 0;
+  font-size: 1rem;
+  font-weight:400;
+}
+
+
+/*Styles for search.js*/
+.search {
+  background: white;
+  border-radius:5px;
+  padding: 5px 5px;
+}
+.search__submit-button {
+  display: block;
+  margin: 0 auto;
+  width: 30%;
+}
+
+.search__instructions {
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+
+.search__progress-bar-parent {
+  vertical-align: middle;
+  margin-bottom: 20px;
+  margin-left: 0;
+  border-radius: 8px;
+  background: #EBEBEB;
+  width: 100%;
+  height: 1.5rem;
+}
+.search__progress-bar{
+  height: 1.5rem;
+  border-radius: 8px;
+}
+.search__display-percentage {
+  margin-left: 10px;
+  color: white;
+}
+
+.search__progress-bar--valence {
+  height: 1.5rem;
+  border-radius: 8px;
+  background-color: #2BAE67 !important;
+}
+.search__progress-bar--energy {
+  height: 1.5rem;
+  border-radius: 8px;
+  background-color: #2f98bf !important;
+}
+
+
+
+/*trackinfo classes */
+.trackInfo {
+  padding: 14px;
+  margin:1.2rem;
+  border-top: 1px solid #ebebeb;
+
+}
+.trackInfo__image {
+  width: 8rem;
+  height:8rem;
+  border-radius: 5px;
+}
+
+.trackInfo__song-info {
+  margin-top: 0;
+  margin-bottom: 4px;
+  font-size: 1.3rem;
+  color: #363636;
+  font-weight:600;
+  
+}
+.trackInfo__album-info {
+  font-size: 1rem;
+  font-weight:400;
+  margin: 0;
+}
+
 
 

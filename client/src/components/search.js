@@ -1,47 +1,66 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
 import Results from "./results";
 import axios from "axios";
-
 
 class Search extends React.Component{
 
   state = {
-    articles: [],
-    
+    playlistInfo:{},
+    playlistId: '' 
   }
 
-  click = ()=>{
-    console.log("i am clicked");
-      axios.get("/getPlaylistsTracks").then(res=>{
-      this.setState({articles:res.data})
-  });
+  submitPlaylist = ()=>{
+    if(this.state.playlistId !=='') {
+      this.setState({playlistInfo:''})
+      var playlistId = this.state.playlistId
+      axios.get(`/getPlaylistsTracks/${playlistId}`)
+      .then(res=>{
+        this.setState({playlistInfo:res.data});
+      }).catch(failure =>{
+        alert("hmmm, something went wrong. Check dev tools for more info");
+        console.log(failure);
+      });
+    }
+    else {
+      alert("enter a valid playlist id!");
+    }
   }
 
-  handleNameChange = (event)=>{
-    this.setState({articleName:event.target.value});
+  handleIdChange = (event)=>{
+    this.setState({playlistId:event.target.value});
   }
-
-
+  
   render(){
-
-    
+    var resultsComponent;
+    if( this.state.playlistInfo.hasOwnProperty("playlist_name")===false ){
+      resultsComponent = <p className="center-align search__instructions">
+      Welcome to Playlit! Enter your <strong>Spotify playlist's ID</strong> and find out how <strong>lit</strong> your songs are!
+      </p>
+    }
+    else {
+      resultsComponent = <Results playlistInfo={this.state.playlistInfo}></Results>  
+    }
 
     return(
-      <div>
+      <div className="search">
         <br/>
         <br/>
             <div className="row">
-              <div className="input-field col s12">
-                <input onChange={this.handleNameChange}id="articleName" type="text"
-                  placeholder="Enter Article" 
-                  className="validate"/>
+              <div className="col s12 m2 l2"></div>
+              <div className="col s12 m8 l8">
+                <div className="input-field">
+                  <input onChange={this.handleIdChange} type="text"
+                    placeholder="Enter Playlist Id" 
+                    className="validate"/>
+                  <a onClick={this.submitPlaylist}  className= "btn search__submit-button align-center waves-effect waves-light " >Submit</a>
+                </div>
               </div>
+              <div className="col s12 m2 l2"></div>
             </div>
-            <a onClick={this.click} id="send-btn" className= "btn waves-effect waves-light btn-large center-align valign-wrapper" >Submit</a>
+            <div className="row">
+              {resultsComponent}
+            </div>
             
-            
-            {/* <Results items={this.state.articles}></Results> */}
       </div>)
   }
   

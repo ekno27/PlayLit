@@ -2,9 +2,8 @@ import React from "react";
 
 const Head= () => {
         return(
-            <div>
-                <h1 className="header">PlayLit</h1>
-                <hr/>
+            <div className="head">
+                <h1 className="head__title">PlayLit</h1>
             </div>
         );
 };
