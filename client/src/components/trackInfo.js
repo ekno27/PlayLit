@@ -12,28 +12,43 @@ const TrackInfo = (props)=>{
     width: energyPercentage+"%"
   }
 
-  var valenceDisplay = `${valencePercentage}% Valence`;
-  var energyDisplay = `${energyPercentage}% Energy`;
+  var valenceDisplay = `${valencePercentage}%`;
+  var energyDisplay = `${energyPercentage}%`;
 
   
   return(
     <div className="trackInfo row" key={props.trackInfo.trackName}>
-      <div className="col s3">
+      <div className="col s12 m3">
         <img className="trackInfo__image" src={props.trackInfo.albumArt.url} alt={props.trackInfo.trackName}/>
             <h3 className="trackInfo__song-info">{props.trackInfo.trackName}</h3>
             <h3 className="trackInfo__album-info">{props.trackInfo.albumName}</h3>    
       </div>
-      <div className="col s9">
-        <div className="progress  search__progress-bar-parent ">
-          <div className="search__progress-bar--valence determinate " style={styleValence}>
-            <span className="search__display-percentage">{valenceDisplay}</span>
+      <div className="col s12 m9 trackInfo__bar-wrapper">
+        <div className="row">
+          <div className="col s10">
+            <div className="progress  search__progress-bar-parent ">
+              <div className="search__progress-bar--valence determinate " style={styleValence}>
+            </div>
+        </div>
+          </div>
+          <div className="col s2">
+            <span className="search__display-percentage search__display-valence">{valenceDisplay}</span>
           </div>
         </div>
-        <div className="progress  search__progress-bar-parent ">
-          <div className="search__progress-bar--energy determinate" style={styleEnergy}>
-            <span className="search__display-percentage" >{energyDisplay}</span>
+        <div className="row">
+          <div className="col s10">
+            <div className="progress  search__progress-bar-parent ">
+              <div className="search__progress-bar--energy determinate" style={styleEnergy}>
+              </div>
+            </div>
+          </div>
+          <div className="col s2">
+            <span className="search__display-percentage search__display-energy" >{energyDisplay}</span>
           </div>
         </div>
+          
+          
+
     </div>
     </div>);
 }   

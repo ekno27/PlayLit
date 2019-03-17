@@ -7,11 +7,12 @@ const Results = (props) =>{
         
         <div className="results">
             <div className="row">
-                <div className="col s12">
+                <div className="col s12 m10">
                     <h2 className="results__title">Litness Analysis of your playlist: <strong>{props.playlistInfo.playlist_name}</strong>
                     </h2>
+                    <span className="results__legend-base results__legend--energy"></span>Valence
+                    <span className="results__legend-base results__legend--valence"></span>Energy
                 </div>
-                
             </div>    
             <div className="row">{trackInfoList}</div>
         </div>
