@@ -63,10 +63,11 @@ router.get("/getPlaylistsTracks/:playlistId", (req,res)=> {
             // the info of all tracks can be retrieved in one call 
             trackIdList += `${trackInfo.track.id},`
             });
+            //second API call made to add audio features
             spotifyAPI.getTrackInformation(access_token, trackIdList)
             .then(response => {
                 var audioFeaturesList = response.data.audio_features
-                //add audio features to the on tracksWithRelevantInfo
+                //add audio features to tracksWithRelevantInfo
                 audioFeaturesList.forEach((trackInfo, index) =>{
                     tracksWithRelevantInfo[index].energy = trackInfo.energy;
                     tracksWithRelevantInfo[index].valence =trackInfo.valence;

@@ -2,6 +2,7 @@ import React from "react";
 import TrackInfo from "./trackInfo";
 
 const Results = (props) =>{
+    //render multiple trackInfo components featuring track info and features
     var trackInfoList = props.playlistInfo.tracks.map((trackDetails,key) =><TrackInfo trackInfo={trackDetails} key={key}></TrackInfo>)
     return(
         

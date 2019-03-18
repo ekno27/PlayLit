@@ -10,13 +10,18 @@ class Search extends React.Component{
   }
 
   submitPlaylist = ()=>{
+    //form verification
     if(this.state.playlistId !=='') {
+      //empty state to prevent having unnecessary data in the state
       this.setState({playlistInfo:''})
       var playlistId = this.state.playlistId
+
+      //calling the route that will be used to retrieve playlist info
       axios.get(`/getPlaylistsTracks/${playlistId}`)
       .then(res=>{
         this.setState({playlistInfo:res.data});
       }).catch(failure =>{
+        //check if spotify id was valid
         if (failure.response.status===400) {
           alert("Invalid Playlist ID. Please enter a valid Spotify Playlist ID ")
         }else{
@@ -25,6 +30,7 @@ class Search extends React.Component{
         }
       });
     }
+    //if user tries to submit an empty form
     else {
       alert("enter a valid playlist id!");
     }
@@ -35,6 +41,8 @@ class Search extends React.Component{
   }
   
   render(){
+    //conditional rendering, will show Results component if state features playlist info 
+
     var resultsComponent;
     if( this.state.playlistInfo.hasOwnProperty("playlist_name")===false ){
       resultsComponent = <p className="center-align search__instructions">

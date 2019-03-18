@@ -1,7 +1,9 @@
 //FUNCTIONS USED TO HIT THE SPOTIFY API
 
 const axios = require('axios')
+
 module.exports = {
+  //api call used to retrieve access_token
   getAccessToken(client_id, client_secret) {
     return axios({
       method:'post',
@@ -16,7 +18,7 @@ module.exports = {
     });
   },
   
-  //test API call to see if spotify api is being used correctly
+  //test API call to see if spotify api is being used correctly, not used in actual app
   getUserData(access_token) {
     return axios({
       method:'get',
@@ -28,6 +30,7 @@ module.exports = {
     });
   },
 
+  //API calls to get the tracks from a user's playlist. 
   getPlaylistTracks(access_token, playlistId) {
     return axios({
       method: 'get',
@@ -39,6 +42,8 @@ module.exports = {
     });
   },
 
+  //API call to get the track feautures of each song in the playlist.
+  //each song is passed in one large string of ids through trackIdList
   getTrackInformation(access_token, trackIdList) {
     return axios({
       method: 'get',
