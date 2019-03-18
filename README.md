@@ -1,5 +1,5 @@
 # PlayLit: Figure out how lit your playlist is!
-## Don't want to install anything locally? 
+## Don't want to run anything locally? 
 Check out the deployed application here: <https://playlit-eac.herokuapp.com/>
 
 ## Running App Locally
