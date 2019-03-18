@@ -27,7 +27,6 @@ const TrackInfo = (props)=>{
   artists = artists.substring(0, artists.length-2)
 
 
-  console.log(artists)
   return(
     <div className="trackInfo row" key={props.trackInfo.trackName}>
       <div className="col s12 m3">
