@@ -1,7 +1,7 @@
 //FUNCTIONS USED TO HIT THE SPOTIFY API
 
 const axios = require('axios')
-
+//API calls modeled after this post: https://medium.com/@alex.ginsberg/beginners-guide-to-the-spotify-web-api-bade6aa2d47c
 module.exports = {
   //api call used to retrieve access_token
   getAccessToken(client_id, client_secret) {
