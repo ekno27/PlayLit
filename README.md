@@ -1,7 +1,7 @@
 # PlayLit: Figure out how lit your playlist is!
 ## Don't want to run anything locally? 
 Check out the deployed application here: <https://playlit-eac.herokuapp.com/>
-note: Application might take some time to load if it hasn't been accessed for a while -- this is due to how heroku allocates server resources
+note: Application might take some time to load if it hasn't been accessed for a while -- this is due to how heroku allocates server resources.
 
 ## Running App Locally
 1. while in this directory, run
